@@ -1,0 +1,14 @@
+{
+  "name": "merhaba-nodejs",
+  "version": "1.0.0",
+  "description": "website-project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Volkan Can Bacaksız",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
