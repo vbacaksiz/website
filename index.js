@@ -1,22 +1,17 @@
+const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
 
-app.get('/', (req, res) => {
-    res.send('Merhaba Dünya!');
-});
+const indexRoutes = require("./routes/indexRoutes");
 
-app.get('/kategori', (req,res) => {
-    res.send('Kategori sayfasındasınız!');
-});
+app.set('view engine', 'ejs');
+app.use(express.static('public'));
 
-//denemek için urlnin sonuna galeri/teknoloji/bu-icatlar-gorenleri-gulduruyor eklenebilir
-app.get('/galeri/:categoryUrl/:titleUrl', (req, res) => {
-	const category = req.params.categoryUrl;
-	const titleUrl = req.params.titleUrl;
-	
-	res.send(`${category} kategorisindeki ${titleUrl} içeriğine bakıyorsunuz.`);
-});
+app.use(indexRoutes);
 
-app.listen(3000, () => {
-    console.log('Server açık');
+const server = app.listen(3000, (err) => {
+    if(err){
+        console.log(err);
+    }
+    console.log('App started. Port number : %d ', server.address().port);
 });
