@@ -1,0 +1,12 @@
+#mainNav .navbar-brand{
+    color:black;
+}
+#mainNav .navbar-brand:hover{
+    color:black;
+}
+#mainNav .navbar-nav > li.nav-item > a{
+    color:black;
+}
+#mainNav .navbar-nav > li.nav-item > a:hover{
+    color:black;
+}
