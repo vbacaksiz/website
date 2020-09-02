@@ -1,11 +1,4 @@
 const axios = require('axios');
-/*const express = require('express');
-const app = express();
-const bodyParser = require('body-parser');
-
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
-app.use(express.json());*/
 
 let user = require('../models/user');
 
@@ -26,7 +19,7 @@ exports.newUser = function(req, res){
     res.render('auths/signup');
 };
 
-exports.newUserPost = function(req, res){
+/*exports.newUserPost = function(req, res){
     axios.post('http://localhost:4000/user/signup', {
     "firstName": "vola",
     "lastName": "Bacaksız",
@@ -40,16 +33,21 @@ exports.newUserPost = function(req, res){
             error: err
         });
     });
-}
-
-/*exports.newUserPost = (req, res) => {
-    Headers = {
-        'Content-Type': 'application/json'
-    }
-    body = JSON.stringify({
-        user: {
-            firstName: req.body.firstName
-        }
-    })
-    console.log(user.firstName);
 }*/
+
+exports.newUserPost = (req, res) => {
+    axios.post('http://localhost:4000/user/signup', {
+        "firstName": req.body.firstName,
+        "lastName": req.body.lastName,
+        "email": req.body.email,
+        "password": req.body.password
+    }).then(response => {
+        console.log(response);
+      }).catch(err => {
+        console.log(err);
+        res.status(401).json({
+            error: err
+        });
+    });
+    return res.redirect('/signin');
+}
