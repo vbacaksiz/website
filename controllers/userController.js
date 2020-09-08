@@ -12,7 +12,9 @@ exports.userProfile = function(req, res){
 };
 
 exports.loginUser = function(req, res){
-    res.render('auths/signin');
+    res.render('auths/signin', {user: user});
+    user.firstName = undefined;
+    user.lastName = undefined;
 };
 
 exports.newUser = function(req, res){
@@ -42,12 +44,19 @@ exports.newUserPost = (req, res) => {
         "email": req.body.email,
         "password": req.body.password
     }).then(response => {
-        console.log(response);
+        user.firstName = req.body.firstName;
+        user.lastName = req.body.lastName;
+        res.redirect('signin');
       }).catch(err => {
-        console.log(err);
-        res.status(401).json({
-            error: err
-        });
+        if(err.response){
+            formData = {
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                email: req.body.email,
+            }
+            console.log(err.response.data.message);
+            const error = err.response.data.message;
+            res.render('auths/signup', {error: error, formData: formData});
+        }
     });
-    return res.redirect('/signin');
 }
