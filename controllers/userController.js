@@ -60,3 +60,20 @@ exports.newUserPost = (req, res) => {
         }
     });
 }
+
+exports.loginUserPost = (req, res) => {
+    axios.post('http://localhost:4000/user/login', {
+        "email": req.body.email,
+        "password": req.body.password
+    }).then(response => {
+        res.redirect('/');
+    }).catch(err => {
+        if(err.response){
+            console.log(err.response.data.message);
+            const error = err.response.data.message;
+            user.email = req.body.email;
+            res.render('auths/signin', {user: user, error: error})
+        }
+    })
+    console.log(req.body.email);
+}

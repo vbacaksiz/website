@@ -20,4 +20,6 @@ router.get('/signup', userController.newUser);
 
 router.post('/signup', userController.newUserPost);
 
+router.post('/signin', userController.loginUserPost);
+
 module.exports = router;
