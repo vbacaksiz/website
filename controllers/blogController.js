@@ -1,4 +1,5 @@
 let blog = require('../models/blog');
+let user = require('../models/user');
 
 let data = [
     {
@@ -19,13 +20,16 @@ let data = [
 ]
 
 exports.blogList = function(req, res){
-    res.render('home', {data:data});
+    console.log(user.email);
+    console.log(user.firstName);
+    console.log(token);
+    res.render('home', {user: user, data: data});
 };
 
 exports.blogDetail = function(req, res){
-    res.render('about');
+    res.render('about', {user: user});
 };
 
 exports.newBlog = function(req, res){
-    res.render('createBlog');
+    res.render('createBlog', {user: user});
 };

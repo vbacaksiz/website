@@ -3,6 +3,7 @@ const express = require('express');
 const axios = require('axios');
 const bodyParser = require('body-parser');
 const app = express();
+let token = "";
 
 const indexRoutes = require("./routes/indexRoutes");
 const adminRoutes = require("./routes/adminRoutes");

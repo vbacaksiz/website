@@ -1,14 +1,13 @@
-const axios = require('axios');
-
 let user = require('../models/user');
+let userServices = require('../services/userServices')
 
 
 exports.contactUser = function(req, res){
-    res.render('contact');
+    res.render('contact', {user: user});
 };
 
 exports.userProfile = function(req, res){
-    res.render('profile');
+    res.render('profile', {user: user});
 };
 
 exports.loginUser = function(req, res){
@@ -38,42 +37,9 @@ exports.newUser = function(req, res){
 }*/
 
 exports.newUserPost = (req, res) => {
-    axios.post('http://localhost:4000/user/signup', {
-        "firstName": req.body.firstName,
-        "lastName": req.body.lastName,
-        "email": req.body.email,
-        "password": req.body.password
-    }).then(response => {
-        user.firstName = req.body.firstName;
-        user.lastName = req.body.lastName;
-        res.redirect('signin');
-      }).catch(err => {
-        if(err.response){
-            formData = {
-                firstName: req.body.firstName,
-                lastName: req.body.lastName,
-                email: req.body.email,
-            }
-            console.log(err.response.data.message);
-            const error = err.response.data.message;
-            res.render('auths/signup', {error: error, formData: formData});
-        }
-    });
+    userServices.newUserPost(req, res);
 }
 
 exports.loginUserPost = (req, res) => {
-    axios.post('http://localhost:4000/user/login', {
-        "email": req.body.email,
-        "password": req.body.password
-    }).then(response => {
-        res.redirect('/');
-    }).catch(err => {
-        if(err.response){
-            console.log(err.response.data.message);
-            const error = err.response.data.message;
-            user.email = req.body.email;
-            res.render('auths/signin', {user: user, error: error})
-        }
-    })
-    console.log(req.body.email);
+    userServices.loginUserPost(req, res);
 }
