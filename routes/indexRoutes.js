@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
+
 let blogController = require('../controllers/blogController');
 let userController = require('../controllers/userController');
 
@@ -21,5 +22,7 @@ router.get('/signup', userController.newUser);
 router.post('/signup', userController.newUserPost);
 
 router.post('/signin', userController.loginUserPost);
+
+router.get('/logout', userController.logoutUser);
 
 module.exports = router;

@@ -35,7 +35,7 @@ exports.loginUserPost = (req, res) => {
         user.firstName = response.data.firstName;
         user.lastName = response.data.lastName;
         token = response.data.token;
-        console.log(token);
+        localStorage.setItem("token", token);
         res.redirect('/');
     }).catch(err => {
         if(err.response){
@@ -45,5 +45,4 @@ exports.loginUserPost = (req, res) => {
             res.render('auths/signin', {user: user, error: error})
         }
     })
-    console.log(req.body.email);
 }

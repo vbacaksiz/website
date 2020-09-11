@@ -1,5 +1,7 @@
 let blog = require('../models/blog');
 let user = require('../models/user');
+const { render } = require('ejs');
+
 
 let data = [
     {
@@ -19,17 +21,26 @@ let data = [
     }
 ]
 
-exports.blogList = function(req, res){
-    console.log(user.email);
-    console.log(user.firstName);
-    console.log(token);
-    res.render('home', {user: user, data: data});
+exports.blogList = function (req, res) {
+    if (localStorage.getItem("token") != null) {
+        res.render('home', {user: user, data: data });
+    } else {
+        res.redirect('signin');
+    }
 };
 
-exports.blogDetail = function(req, res){
-    res.render('about', {user: user});
+exports.blogDetail = function (req, res) {
+    if (localStorage.getItem("token") != null) {
+        res.render('about', { user: user });
+    } else {
+        res.redirect('signin');
+    }
 };
 
-exports.newBlog = function(req, res){
-    res.render('createBlog', {user: user});
+exports.newBlog = function (req, res) {
+    if (localStorage.getItem("token") != null) {
+        res.render('createBlog', { user: user });
+    } else {
+        res.redirect('signin');
+    }
 };
