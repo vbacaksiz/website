@@ -3,37 +3,21 @@ let userServices = require('../services/userServices')
 
 
 exports.contactUser = function(req, res){
-    if (localStorage.getItem("token") != null) {
-        res.render('contact', {user: user});
-    } else {
-        res.redirect('signin');
-    }
+    res.render('contact', {user: user});
 };
 
 exports.userProfile = function(req, res){
-    if (localStorage.getItem("token") != null) {
-        res.render('profile', {user: user});
-    } else {
-        res.redirect('signin');
-    }
+    res.render('profile', {user: user});
 };
 
 exports.loginUser = function(req, res){
-    if (localStorage.getItem("token") == null) {
-        res.render('auths/signin', {user: user});
-        user.firstName = undefined;
-        user.lastName = undefined;
-    } else {
-        res.redirect('/');
-    }
+    res.render('auths/signin', {user: user});
+    user.firstName = undefined;
+    user.lastName = undefined;
 };
 
 exports.newUser = function(req, res){
-    if (localStorage.getItem("token") == null) {
-        res.render('auths/signup');
-    } else {
-        res.redirect('/');
-    }
+    res.render('auths/signup');
 };
 
 /*exports.newUserPost = function(req, res){

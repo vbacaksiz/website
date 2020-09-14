@@ -1,6 +1,7 @@
 let blog = require('../models/blog');
 let user = require('../models/user');
 const { render } = require('ejs');
+const axios = require('axios');
 
 
 let data = [
@@ -22,25 +23,66 @@ let data = [
 ]
 
 exports.blogList = function (req, res) {
-    if (localStorage.getItem("token") != null) {
-        res.render('home', {user: user, data: data });
-    } else {
-        res.redirect('signin');
-    }
+    res.render('home', {user: user, data: data });
 };
 
 exports.blogDetail = function (req, res) {
-    if (localStorage.getItem("token") != null) {
-        res.render('about', { user: user });
-    } else {
-        res.redirect('signin');
-    }
+    res.render('about', { user: user });
 };
 
 exports.newBlog = function (req, res) {
-    if (localStorage.getItem("token") != null) {
-        res.render('createBlog', { user: user });
-    } else {
-        res.redirect('signin');
-    }
+    res.render('createBlog', { user: user });
 };
+
+/*exports.newBlogPost = (req, res) => {
+    const blogTitle = req.body.blogTitle;
+    console.log(blogTitle);
+    const blogSubtitle = req.body.blogSubtitle;
+    console.log(blogSubtitle);
+    const blogContent = req.body.editor;
+    console.log(blogContent);
+    const blogImg = req.body.img;
+    console.log(blogImg);
+    res.render('createBlog', {user: user});
+};*/
+
+exports.newBlogPost = (req, res) => {
+    console.log(req.body.img);
+    axios.post('http://localhost:4000/blogs/create-blog', {
+        "blogTitle": req.body.blogTitle,
+        "blogSubtitle": req.body.blogSubtitle,
+        "blogImg": req.body.img,
+        "blogContent": req.body.editor
+    }).then(response => {
+        console.log('Success');
+        res.redirect('/');
+      }).catch(err => {
+        if(err.response){
+            console.log(err.response.data.message);
+        }
+    });
+}
+
+
+/*axios.post('http://localhost:4000/user/signup', {
+        "firstName": req.body.firstName,
+        "lastName": req.body.lastName,
+        "email": req.body.email,
+        "password": req.body.password
+    }).then(response => {
+        user.firstName = req.body.firstName;
+        user.lastName = req.body.lastName;
+        res.redirect('signin');
+      }).catch(err => {
+        if(err.response){
+            formData = {
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                email: req.body.email,
+            }
+            console.log(err.response.data.message);
+            const error = err.response.data.message;
+            res.render('auths/signup', {error: error, formData: formData});
+        }
+    });
+}*/

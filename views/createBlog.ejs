@@ -77,7 +77,8 @@
     </header>
 
     <div class="container col-lg-7">
-        <form id="form">
+        <div id="error"></div>
+        <form id="form" action="/create-blog" method="POST">
             <div class="form-group">
                 <label for="blogTitle">Blog Title</label>
                 <input type="text" class="form-control" id="blogTitle" placeholder="Blog Title" name="blogTitle">
@@ -90,7 +91,6 @@
             <div class="form-group">
                 <label for="img">Select image:</label>
                 <input type="file" id="img" name="img" accept="image/*">
-                <input type="submit">
             </div>
             <div class="form-group">
                 <label for="blogContent">Blog Content</label>
@@ -99,9 +99,6 @@
             <button type="submit" class="btn btn-primary">CREATE</button>
         </form>
     </div>
-    
-    
-
 
 
     <!-- Footer -->

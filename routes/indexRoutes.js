@@ -1,28 +1,30 @@
 const express = require('express');
 const router = express.Router();
 
-
+let authGuard = require('../services/middleware');
 let blogController = require('../controllers/blogController');
 let userController = require('../controllers/userController');
 
-router.get("/", blogController.blogList);
+router.get('/', authGuard.isNotAuthenticated, blogController.blogList);
 
-router.get("/about", blogController.blogDetail);
+router.get('/about', authGuard.isNotAuthenticated, blogController.blogDetail);
 
-router.get('/contact', userController.contactUser);
+router.get('/contact', authGuard.isNotAuthenticated, userController.contactUser);
 
-router.get('/profile', userController.userProfile);
+router.get('/profile', authGuard.isNotAuthenticated, userController.userProfile);
 
-router.get('/create-blog', blogController.newBlog);
+router.get('/create-blog', authGuard.isNotAuthenticated, blogController.newBlog);
 
-router.get('/signin', userController.loginUser);
+router.post('/create-blog', authGuard.isNotAuthenticated, blogController.newBlogPost);
 
-router.get('/signup', userController.newUser);
+router.get('/signin', authGuard.isAuthenticated, userController.loginUser);
 
-router.post('/signup', userController.newUserPost);
+router.get('/signup', authGuard.isAuthenticated, userController.newUser);
 
-router.post('/signin', userController.loginUserPost);
+router.post('/signup', authGuard.isAuthenticated, userController.newUserPost);
 
-router.get('/logout', userController.logoutUser);
+router.post('/signin', authGuard.isAuthenticated, userController.loginUserPost);
+
+router.get('/logout', authGuard.isNotAuthenticated, userController.logoutUser);
 
 module.exports = router;
