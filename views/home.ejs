@@ -16,28 +16,30 @@
 
 <!-- Main Content -->
 <div class="container">
-    <% data.forEach( (data) => { %>
+    <% foundBlogs.forEach( (blog) => { %>
     <div class="row">
-        <div class="col-lg-3 mx-auto">
-            <img class="img-thumbnail" src="<%=data.image%>" alt="blog images">
+        <div class="col-lg-5 mx-auto">
+            <img src="<%=blog.blogImg%>" style="height: 400px; width: 400px;" alt="blog images">
         </div>
-        <div class="col-lg-9 mx-auto">
+        <div class="col-lg-7 mx-auto">
             <div class="post-preview">
-                <a href="post.html">
+                <a href="/blogs/<%= blog._id%>">
                     <h2 class="post-title">
-                        <%= data.postTitle %>
+                        <%= blog.blogTitle %>
                     </h2>
                     <h3 class="post-subtitle">
-                        Problems look mighty small from 150 miles up
+                        <%= blog.blogSubtitle %>
                     </h3>
                 </a>
                 <p class="post-meta">Posted by
                     <a href="#">Start Bootstrap</a>
-                    on September 24, 2019</p>
+                    on <%= blog.createdDate %></p>
             </div>
             <hr>
         </div>
     </div>
+    <br>
+    <br>
     <% }); %>
     <!-- Pager -->
     <div class="clearfix">

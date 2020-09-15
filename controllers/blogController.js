@@ -4,7 +4,7 @@ const { render } = require('ejs');
 
 let blogServices= require('../services/blogServices');
 
-let data = [
+/*let data = [
     {
         postTitle: "Blog denemesi",
         postSubtitle: "qqqqqqqqqqqqqqqqqqqqq",
@@ -20,13 +20,13 @@ let data = [
         postSubtitle: "eeeeeeeeeeeeeeeeeee",
         image: "https://images.unsplash.com/photo-1466096115517-bceecbfb6fde?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80",
     }
-]
+]*/
 
-exports.blogList = function (req, res) {
-    res.render('home', { user: user, data: data });
-};
+exports.blogList = (req, res) => {
+    blogServices.blogList(req, res);
+}
 
-exports.blogDetail = function (req, res) {
+exports.siteDetail = function (req, res) {
     res.render('about', { user: user });
 };
 
@@ -37,3 +37,4 @@ exports.newBlog = function (req, res) {
 exports.newBlogPost = (req, res) => {
     blogServices.newBlogPost(req, res);
 }
+

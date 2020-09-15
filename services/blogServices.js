@@ -45,7 +45,7 @@ exports.newBlogPost = (req, res) => {
             }
             res.render('createBlog', { user: user, error: err })
         } else {
-            if (req.file != undefined ) {
+            if (req.file != undefined) {
                 let base64String = base64Encode(req.file.path);
                 axios.post('http://localhost:4000/blogs/create-blog', {
                     "blogTitle": req.body.blogTitle,
@@ -53,12 +53,14 @@ exports.newBlogPost = (req, res) => {
                     "blogImg": base64String,
                     "blogContent": req.body.editor
                 }).then(response => {
+                    fs.unlinkSync(req.file.path);
                     console.log('Success');
                     res.redirect('/');
                 }).catch(err => {
                     if (err.response) {
                         console.log(err.response.data.message);
                     }
+                    fs.unlinkSync(req.file.path);
                 });
             } else {
                 axios.post('http://localhost:4000/blogs/create-blog', {
@@ -74,11 +76,21 @@ exports.newBlogPost = (req, res) => {
                     }
                 });
             }
-
-
         }
     });
-    /*fs.writeFile('image.png', base64str, { encoding: 'base64' }, function (err) {
-        console.log('File Created');
-    })*/
+}
+
+exports.blogList = (req, res) => {
+    axios.get('http://localhost:4000/blogs/').then(foundBlogs => {
+        foundBlogs.data.forEach((blog) => {
+            fs.writeFile('public/blogImages/' + blog._id + '.png', blog.blogImg, { encoding: 'base64' }, function (err) {
+                console.log('File created');
+            });
+            blog.blogImg = 'blogImages/' + blog._id + '.png';
+        })
+        res.render('home', { user: user, foundBlogs: foundBlogs.data });
+    }).catch(err => {
+        console.log(err);
+        console.log('error');
+    })
 }
