@@ -78,7 +78,12 @@
 
     <div class="container col-lg-7">
         <div id="error"></div>
-        <form id="form" action="/create-blog" method="POST">
+        <%if(typeof error == "undefined"){%>
+
+        <% } else { %>
+        <div class="alert alert-danger" id="imageError" style="text-align:center"><%= error %></div>
+        <% } %>
+        <form id="form" action="/create-blog" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="blogTitle">Blog Title</label>
                 <input type="text" class="form-control" id="blogTitle" placeholder="Blog Title" name="blogTitle">
@@ -91,6 +96,8 @@
             <div class="form-group">
                 <label for="img">Select image:</label>
                 <input type="file" id="img" name="img" accept="image/*">
+                <br>
+                <small>Max File Size: 100kb (102400 byte)</small>
             </div>
             <div class="form-group">
                 <label for="blogContent">Blog Content</label>
@@ -147,6 +154,35 @@
     <script type="text/javascript" src="ckeditor/ckeditor.js"></script>
     <script>
         CKEDITOR.replace('editor');
+    </script>
+    <script>
+        const form = document.getElementById('form');
+        const blogTitle = document.getElementById('blogTitle');
+        const blogSubtitle = document.getElementById('blogSubtitle');
+        const blogContent = CKEDITOR.instances.myTextArea;
+        const errorElement = document.getElementById('error');
+        const imageError = document.getElementById('imageError');
+        errorElement.style = "text-align:center";
+
+        form.addEventListener('submit', (e) => {
+            let messages = [];
+            if (blogTitle.value === '' || blogTitle.value == null) {
+                messages.push('Blog Title Required');
+            }
+
+            if (blogContent.getData() === '' || blogContent.getData() == null) {
+                messages.push('Blog Content Required');
+            }
+
+
+            if (messages.length > 0) {
+                e.preventDefault();
+                errorElement.innerText = messages.join('\n');
+                errorElement.classList = "alert alert-danger";
+                if (imageError != null)
+                    imageError.remove();
+            }
+        })
     </script>
 </body>
 
