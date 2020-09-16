@@ -35,6 +35,7 @@ exports.loginUserPost = (req, res) => {
         user.firstName = response.data.firstName;
         user.lastName = response.data.lastName;
         token = response.data.token;
+        user.id = response.data.id;
         localStorage.setItem("token", token);
         res.redirect('/');
     }).catch(err => {

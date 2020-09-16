@@ -51,7 +51,8 @@ exports.newBlogPost = (req, res) => {
                     "blogTitle": req.body.blogTitle,
                     "blogSubtitle": req.body.blogSubtitle,
                     "blogImg": base64String,
-                    "blogContent": req.body.editor
+                    "blogContent": req.body.editor,
+                    "email": user.email
                 }).then(response => {
                     fs.unlinkSync(req.file.path);
                     console.log('Success');
@@ -63,10 +64,12 @@ exports.newBlogPost = (req, res) => {
                     fs.unlinkSync(req.file.path);
                 });
             } else {
+                console.log(user.email);
                 axios.post('http://localhost:4000/blogs/create-blog', {
                     "blogTitle": req.body.blogTitle,
                     "blogSubtitle": req.body.blogSubtitle,
-                    "blogContent": req.body.editor
+                    "blogContent": req.body.editor,
+                    "email": user.email
                 }).then(response => {
                     console.log('Success');
                     res.redirect('/');
@@ -88,6 +91,8 @@ exports.blogList = (req, res) => {
             });
             blog.blogImg = 'blogImages/' + blog._id + '.png';
         })
+        console.log(user.email);
+        console.log(user._id);
         res.render('home', { user: user, foundBlogs: foundBlogs.data });
     }).catch(err => {
         console.log(err);
