@@ -87,12 +87,9 @@ exports.blogList = (req, res) => {
     axios.get('http://localhost:4000/blogs/').then(foundBlogs => {
         foundBlogs.data.forEach((blog) => {
             fs.writeFile('public/blogImages/' + blog._id + '.png', blog.blogImg, { encoding: 'base64' }, function (err) {
-                console.log('File created');
             });
             blog.blogImg = 'blogImages/' + blog._id + '.png';
         })
-        console.log(user.email);
-        console.log(user._id);
         res.render('home', { user: user, foundBlogs: foundBlogs.data });
     }).catch(err => {
         console.log(err);
