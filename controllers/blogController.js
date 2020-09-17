@@ -38,3 +38,7 @@ exports.newBlogPost = (req, res) => {
     blogServices.newBlogPost(req, res);
 }
 
+exports.blogDetail = (req, res) => {
+    blogServices.blogDetail(req, res);
+}
+

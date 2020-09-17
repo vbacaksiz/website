@@ -96,3 +96,17 @@ exports.blogList = (req, res) => {
         console.log('error');
     })
 }
+
+
+exports.blogDetail = (req, res) => {
+    axios.get('http://localhost:4000/blogs/'+ req.params.blogId).then(foundBlog => {
+        fs.writeFile('public/blogImages/' + foundBlog.data._id + '.png', foundBlog.data.blogImg, { encoding: 'base64' }, function (err) {
+            console.log('File created');
+        });
+        foundBlog.data.blogImg = 'blogImages/' + foundBlog.data._id + '.png';
+        res.render('blogDetail', {user: user, foundBlog: foundBlog.data})
+    }).catch(err => {
+        console.log(err);
+        console.log('error');
+    })
+}

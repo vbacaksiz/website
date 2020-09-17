@@ -11,18 +11,18 @@
     <title>Clean Blog - Start Bootstrap Theme</title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
 
     <!-- Custom fonts for this template -->
-    <script src="js/fontawesome.js"></script>
+    <script src="/js/fontawesome.js"></script>
 
     <!-- Custom styles for this template -->
-    <script src="js/jquery.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
 
 
     <!-- Custom styles for this template -->
-    <link href="css/main.css" rel="stylesheet">
-    <link href="css/navbar.css" rel="stylesheet">
+    <link href="/css/main.css" rel="stylesheet">
+    <link href="/css/navbar.css" rel="stylesheet">
 
 </head>
 
@@ -54,7 +54,7 @@
                     </li>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><img
-                                    src="img/default-profile.jpg" alt="Alternate Text"
+                                    src="/img/default-profile.jpg" alt="Alternate Text"
                                     class="img-responsive rounded-circle" style="width: 30px;height: 30px;" />
                                 <b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -62,7 +62,7 @@
                                     <div class="navbar-content">
                                         <div class="row">
                                             <div class="col-md-5">
-                                                <img src="img/default-profile.jpg" alt="Alternate Text"
+                                                <img src="/img/default-profile.jpg" alt="Alternate Text"
                                                     class="img-responsive rounded-circle"
                                                     style="width: 120px;height: 120px;" />
                                                 <p class="text-center small">
@@ -100,3 +100,82 @@
             </div>
         </div>
     </nav>
+
+
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url('/<%= foundBlog.blogImg %>')">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <div class="page-heading">
+                        <h1><%= foundBlog.blogTitle %></h1>
+                        <span class="subheading"><%= foundBlog.blogSubtitle %></span>
+                        <span>Posted By <a href="/users/<%= foundBlog.createdUser %>"><b style="color:rgb(243, 180, 63)"><%= foundBlog.blogDetail[0] %> <%= foundBlog.blogDetail[1] %></b></a></span>
+                        <span class="subheading"><%= foundBlog.createdDate %></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <%- foundBlog.blogContent %>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <ul class="list-inline text-center">
+                        <li class="list-inline-item">
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted">Copyright &copy; Your Website 2020</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/popper.min.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="/js/main.js"></script>
+
+</body>
+
+</html>

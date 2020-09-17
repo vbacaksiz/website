@@ -7,6 +7,8 @@ let userController = require('../controllers/userController');
 
 router.get('/', authGuard.isNotAuthenticated, blogController.blogList);
 
+router.get('/blogs/:blogId', authGuard.isNotAuthenticated, blogController.blogDetail);
+
 router.get('/about', authGuard.isNotAuthenticated, blogController.siteDetail);
 
 router.get('/contact', authGuard.isNotAuthenticated, userController.contactUser);
