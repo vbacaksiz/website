@@ -16,6 +16,10 @@
 
 <!-- Main Content -->
 <div class="container">
+    <%if(deletedBlogTitle != undefined){%>
+    <div class="alert alert-danger" style="text-align: center;"><%= deletedBlogTitle %> Deleted!</div>
+    <% } else { %>
+    <%}%>
     <% foundBlogs.forEach( (blog) => { %>
     <div class="row">
         <div class="col-lg-5 mx-auto">

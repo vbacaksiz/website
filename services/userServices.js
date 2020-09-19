@@ -36,6 +36,8 @@ exports.loginUserPost = (req, res) => {
         user.lastName = response.data.lastName;
         token = response.data.token;
         user.id = response.data.id;
+        user.blogs = response.data.blogs;
+        localStorage.setItem("userId", user.id);
         localStorage.setItem("token", token);
         res.redirect('/');
     }).catch(err => {

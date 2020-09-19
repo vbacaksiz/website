@@ -6,7 +6,8 @@ let userSchema = new Schema({
     lastName : {type:String, required:true},
     email : {type:String, required:true},
     password : {type:String, required:true},
-    createdDate : {type:Date, default:Date.now()}
+    createdDate : {type:Date, default:Date.now()},
+    blogs: []
 });
 
 let user = mongoose.model('user', userSchema);

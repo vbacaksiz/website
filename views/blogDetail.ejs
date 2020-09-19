@@ -111,7 +111,9 @@
                     <div class="page-heading">
                         <h1><%= foundBlog.blogTitle %></h1>
                         <span class="subheading"><%= foundBlog.blogSubtitle %></span>
-                        <span>Posted By <a href="/users/<%= foundBlog.createdUser %>"><b style="color:rgb(243, 180, 63)"><%= foundBlog.blogDetail[0] %> <%= foundBlog.blogDetail[1] %></b></a></span>
+                        <span>Posted By <a href="/users/<%= foundBlog.createdUser %>"><b
+                                    style="color:rgb(243, 180, 63)"><%= foundBlog.blogDetail[0] %>
+                                    <%= foundBlog.blogDetail[1] %></b></a></span>
                         <span class="subheading"><%= foundBlog.createdDate %></span>
                     </div>
                 </div>
@@ -129,6 +131,25 @@
     </div>
 
     <hr>
+
+    <%if(user.id == foundBlog.createdUser){%>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-1 mx-auto">
+                <a class="btn btn-primary" href="#" role="button" style="width: 110px;height: 55px;">UPDATE</a>
+                <br>
+                <br>
+                <form id="form" action="/blogs/<%= foundBlog._id%>" method="POST">
+                    <button class="btn btn-danger" style="width: 110px;height: 55px;">DELETE</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    <% } else { %>
+    <%}%>
+    
+    
+    
 
 
 

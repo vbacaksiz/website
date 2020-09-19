@@ -5,6 +5,8 @@ const multer = require('multer');
 let user = require('../models/user');
 let blog = require('../models/blog');
 
+let deletedBlogTitle = undefined;
+
 const storage = multer.diskStorage({
     destination: './public/uploads/',
     filename: function (req, file, callback) {
@@ -90,7 +92,8 @@ exports.blogList = (req, res) => {
             });
             blog.blogImg = 'blogImages/' + blog._id + '.png';
         })
-        res.render('home', { user: user, foundBlogs: foundBlogs.data });
+        res.render('home', { user: user, foundBlogs: foundBlogs.data, deletedBlogTitle: deletedBlogTitle });
+        deletedBlogTitle = undefined;
     }).catch(err => {
         console.log(err);
         console.log('error');
@@ -108,5 +111,15 @@ exports.blogDetail = (req, res) => {
     }).catch(err => {
         console.log(err);
         console.log('error');
+    })
+}
+
+exports.blogDelete = (req,res) => {
+    axios.delete('http://localhost:4000/blogs/'+ req.params.blogId).then(result => {
+        console.log('Deleted');
+        deletedBlogTitle = result.data.blogTitle;
+        res.redirect('/');
+    }).catch(err => {
+        console.log('err');
     })
 }

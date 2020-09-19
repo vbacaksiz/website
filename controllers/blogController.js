@@ -42,3 +42,7 @@ exports.blogDetail = (req, res) => {
     blogServices.blogDetail(req, res);
 }
 
+exports.blogDelete = (req, res) => {
+    blogServices.blogDelete(req, res);
+}
+

@@ -48,5 +48,6 @@ exports.logoutUser = (req, res) => {
     user.firstName = undefined;
     user.lastName = undefined;
     localStorage.removeItem("token");
+    localStorage.removeItem("userId");
     res.redirect('signin');
 }
