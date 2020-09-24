@@ -1,0 +1,76 @@
+<%- include ("./partials/header") %>
+
+<br>
+<br>
+<div class="col-lg-6" style="margin-left: 25%;">
+    <%if(typeof error == "undefined"){%>
+
+    <% } else { %>
+    <div class="alert alert-danger" id="imageError" style="text-align:center"><%= error %></div>
+    <% } %>
+    <div class="container">
+        <div class="row">
+            <form id="form" action="/users/<%= foundUser._id %>/update-profile-photo" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="img">Profile Photo:</label>
+                    <input type="file" id="img" name="img" accept="image/*">
+                    <br>
+                    <small>Max File Size: 100kb (102400 byte)</small>
+                    <br>
+                    <small>Current Image</small>
+                    <br>
+                    <img class="img-responsive rounded-circle" src="/<%= foundUser.userImg %>"
+                        style="width: 200px;height: 200px;">
+                    <hr>
+                    <button type="submit" class="btn btn-primary">UPDATE</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <ul class="list-inline text-center">
+                    <li class="list-inline-item">
+                        <a href="#">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+                <p class="copyright text-muted">Copyright &copy; Your Website 2020</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/popper.min.js"></script>
+
+<!-- Custom scripts for this template -->
+<script src="/js/main.js"></script>
+</body>
+
+</html>

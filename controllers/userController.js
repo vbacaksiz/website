@@ -7,8 +7,28 @@ exports.contactUser = function(req, res){
 };
 
 exports.userProfile = function(req, res){
-    res.render('profile', {user: user});
+    userServices.userProfile(req, res);
 };
+
+exports.aboutUser = function(req, res){
+    userServices.aboutUser(req, res);
+}
+
+exports.updateProfile = function(req, res){
+    userServices.updateProfile(req, res);
+}
+
+exports.updateProfilePost = function(req, res){
+    userServices.updateProfilePost(req, res);
+}
+
+exports.updateProfilePhoto = function(req, res){
+    userServices.updateProfilePhoto(req, res);
+}
+
+exports.updateProfilePhotoPost = function(req, res){
+    userServices.updateProfilePhotoPost(req, res);
+}
 
 exports.loginUser = function(req, res){
     res.render('auths/signin', {user: user});
@@ -51,3 +71,4 @@ exports.logoutUser = (req, res) => {
     localStorage.removeItem("userId");
     res.redirect('signin');
 }
+

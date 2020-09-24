@@ -1,0 +1,35 @@
+<%- include ("./partials/header") %>
+
+
+<div class="col-lg-6" style="margin-left: 25%;">
+    <div class="container">
+        <h2 style="text-align: center;">About</h2>
+        <br>
+        <%- foundUser.about %>
+        <hr>
+        <% if(foundUser.socialMedia.length > 0) { %>
+        <h2 style="text-align: center;">Social Media</h2>
+        <br>
+        <% if(foundUser.socialMedia[0] != "twitter.com/" && foundUser.socialMedia[0] != "" && foundUser.socialMedia[0] != null){ %>
+            <a href="https://<%= foundUser.socialMedia[0] %>"><img src="/img/twitter.jpg" style="width: 120px;height: 100px;"></a>
+        <% } %>
+        <% if(foundUser.socialMedia[1] != "facebook.com/" && foundUser.socialMedia[1] != "" && foundUser.socialMedia[1] != null){ %>
+            <a href="https://<%= foundUser.socialMedia[1] %>"><img src="/img/facebook.png" style="width: 80px;height: 80px;"></a>
+        <% } %>
+        <% if(foundUser.socialMedia[2] != "github.com/" && foundUser.socialMedia[2] != "" && foundUser.socialMedia[2] != null){ %>
+            <a href="https://<%= foundUser.socialMedia[2] %>"><img src="/img/github.png" style="width: 80px;height: 80px;margin-left: 25px;"></a>
+        <% } %>
+        <% if(foundUser.socialMedia[3] != "instagram.com/" && foundUser.socialMedia[3] != "" && foundUser.socialMedia[3] != null){ %>
+            <a href="https://<%= foundUser.socialMedia[3] %>"><img src="/img/instagram.png" style="width: 90px;height: 90px;margin-left: 25px;"></a>
+        <% } %>
+        <br>
+        <br>
+        <hr>
+        <br>
+        <% } else { %>
+        <% } %>
+
+    </div>
+</div>
+
+<%- include ("./partials/footer") %>

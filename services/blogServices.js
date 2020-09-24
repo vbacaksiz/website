@@ -6,6 +6,7 @@ let user = require('../models/user');
 let blog = require('../models/blog');
 
 let deletedBlogTitle = undefined;
+let messages = undefined;
 
 const storage = multer.diskStorage({
     destination: './public/uploads/',
@@ -102,24 +103,92 @@ exports.blogList = (req, res) => {
 
 
 exports.blogDetail = (req, res) => {
-    axios.get('http://localhost:4000/blogs/'+ req.params.blogId).then(foundBlog => {
+    axios.get('http://localhost:4000/blogs/' + req.params.blogId).then(foundBlog => {
         fs.writeFile('public/blogImages/' + foundBlog.data._id + '.png', foundBlog.data.blogImg, { encoding: 'base64' }, function (err) {
             console.log('File created');
         });
         foundBlog.data.blogImg = 'blogImages/' + foundBlog.data._id + '.png';
-        res.render('blogDetail', {user: user, foundBlog: foundBlog.data})
+        res.render('blogDetail', { user: user, foundBlog: foundBlog.data, message: messages })
+        messages = undefined;
     }).catch(err => {
         console.log(err);
         console.log('error');
     })
 }
 
-exports.blogDelete = (req,res) => {
-    axios.delete('http://localhost:4000/blogs/'+ req.params.blogId).then(result => {
+exports.blogDelete = (req, res) => {
+    axios.delete('http://localhost:4000/blogs/' + req.params.blogId).then(result => {
         console.log('Deleted');
         deletedBlogTitle = result.data.blogTitle;
         res.redirect('/');
     }).catch(err => {
         console.log('err');
+    })
+}
+
+exports.blogUpdate = (req, res) => {
+    axios.get('http://localhost:4000/blogs/' + req.params.blogId).then(foundBlog => {
+        fs.writeFile('public/blogImages/' + foundBlog.data._id + '.png', foundBlog.data.blogImg, { encoding: 'base64' }, function (err) {
+            console.log('File created');
+        });
+        foundBlog.data.blogImg = 'blogImages/' + foundBlog.data._id + '.png';
+        return res.render('updateBlog', { user: user, foundBlog: foundBlog.data });
+    }).catch(err => {
+        console.log(err);
+        console.log('error');
+    })
+}
+
+exports.blogUpdatePost = (req, res) => {
+    upload(req, res, function (err) {
+        if (err) {
+            if (err instanceof multer.MulterError) {
+                err = 'File too large';
+            }
+            axios.get('http://localhost:4000/blogs/' + req.params.blogId).then(foundBlog => {
+                fs.writeFile('public/blogImages/' + foundBlog.data._id + '.png', foundBlog.data.blogImg, { encoding: 'base64' }, function (err) {
+                    console.log('File created');
+                });
+                foundBlog.data.blogImg = 'blogImages/' + foundBlog.data._id + '.png';
+                return res.render('updateBlog', { user: user, foundBlog: foundBlog.data, error:err });
+            }).catch(err => {
+                console.log(err);
+                console.log('error');
+            })
+        } else {
+            if (req.file != undefined) {
+                let base64String = base64Encode(req.file.path);
+                axios.post('http://localhost:4000/blogs/' + req.params.blogId, {
+                    "blogTitle": req.body.blogTitle,
+                    "blogSubtitle": req.body.blogSubtitle,
+                    "blogImg": base64String,
+                    "blogContent": req.body.editor,
+                }).then(response => {
+                    fs.unlinkSync(req.file.path);
+                    messages = "Blog Updated Successfully!";
+                    console.log('Success');
+                    res.redirect('/blogs/' + req.params.blogId);
+                }).catch(err => {
+                    if (err.response) {
+                        console.log(err.response.data.message);
+                    }
+                    fs.unlinkSync(req.file.path);
+                });
+            } else {
+                axios.post('http://localhost:4000/blogs/' + req.params.blogId, {
+                    "blogTitle": req.body.blogTitle,
+                    "blogSubtitle": req.body.blogSubtitle,
+                    "blogContent": req.body.editor,
+                }).then(response => {
+                    console.log('Update Success');
+                    messages = "Blog Updated Successfully!";
+                    res.redirect('/blogs/' + req.params.blogId);
+                }).catch(err => {
+                    if (err.response) {
+                        console.log(err.response.data.message);
+                    }
+                });
+            }
+        }
     })
 }

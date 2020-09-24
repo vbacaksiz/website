@@ -11,18 +11,18 @@
     <title>Clean Blog - Start Bootstrap Theme</title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
 
     <!-- Custom fonts for this template -->
-    <script src="js/fontawesome.js"></script>
+    <script src="/js/fontawesome.js"></script>
 
     <!-- Custom styles for this template -->
-    <script src="js/jquery.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
 
 
     <!-- Custom styles for this template -->
-    <link href="css/main.css" rel="stylesheet">
-    <link href="css/navbar.css" rel="stylesheet">
+    <link href="/css/main.css" rel="stylesheet">
+    <link href="/css/navbar.css" rel="stylesheet">
 
 </head>
 
@@ -54,7 +54,7 @@
                     </li>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><img
-                                    src="<%= user.img %>" alt="Alternate Text"
+                                    src="/<%= user.img %>" alt="Alternate Text"
                                     class="img-responsive rounded-circle" style="width: 30px;height: 30px;" />
                                 <b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -62,7 +62,7 @@
                                     <div class="navbar-content">
                                         <div class="row">
                                             <div class="col-md-5">
-                                                <img src="<%= user.img %>" alt="Alternate Text"
+                                                <img src="/<%= user.img %>" alt="Alternate Text"
                                                     class="img-responsive rounded-circle"
                                                     style="width: 120px;height: 120px;" />
                                             </div>
@@ -99,3 +99,36 @@
             </div>
         </div>
     </nav>
+
+    
+
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url('/<%= foundUser.userBackgroundImg %>')">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <div class="page-heading">
+                        <h2><%= foundUser.firstName %></h2>
+                        <span class="subheading"><%= foundUser.lastName %></span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </header>
+    <div style="text-align: center; margin-top: -9em; position: relative;">
+        <img id="userImg" class="rounded-circle" src="/<%= foundUser.userImg%>" style="width: 250px;height: 250px;">
+    </div>
+
+    <script>
+        document.getElementById("userImg").style.border = "solid white";
+    </script>
+
+
+    <% if(localStorage.getItem("userId")==foundUser._id) { %>
+    <%- include ("./forOwner") %>
+    <% } else { %>
+    <%- include ("./forGuest") %>
+    <% } %>

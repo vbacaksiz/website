@@ -100,63 +100,54 @@
         </div>
     </nav>
 
-
-    <!-- Page Header -->
-    <header class="masthead" style="background-image: url('/<%= foundBlog.blogImg %>')">
+    <header class="masthead" style="background-image: url('/img/contact.jpg')">
         <div class="overlay"></div>
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-md-10 mx-auto">
                     <div class="page-heading">
-                        <h1><%= foundBlog.blogTitle %></h1>
-                        <span class="subheading"><%= foundBlog.blogSubtitle %></span>
-                        <span>Posted By <a href="/users/<%= foundBlog.createdUser %>"><b
-                                    style="color:rgb(243, 180, 63)"><%= foundBlog.blogDetail[0] %>
-                                    <%= foundBlog.blogDetail[1] %></b></a></span>
-                        <span class="subheading"><%= foundBlog.createdDate %></span>
+                        <h1>Create A New Blog</h1>
+                        <span class="subheading">Have questions? I have answers.</span>
                     </div>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <div class="container">
-        <%if(typeof message == "undefined"){%>
+    <div class="container col-lg-7">
+        <div id="error"></div>
+        <%if(typeof error == "undefined"){%>
 
         <% } else { %>
-        <div class="alert alert-success" id="updateSuccessfully" style="text-align:center"><%= message %></div>
+        <div class="alert alert-danger" id="imageError" style="text-align:center"><%= error %></div>
         <% } %>
-        <div class="row">
-            <div class="col-lg-8 mx-auto">
-                <%- foundBlog.blogContent %>
+        <form id="form" action="/blogs/<%= foundBlog._id%>/update" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="blogTitle">Blog Title</label>
+                <input type="text" class="form-control" id="blogTitle" placeholder="Blog Title" name="blogTitle" value="<%= foundBlog.blogTitle %>">
             </div>
-        </div>
-    </div>
-
-    <hr>
-
-    <%if(user.id == foundBlog.createdUser){%>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-1 mx-auto">
-                <form id="form" action="/blogs/<%= foundBlog._id%>/update" method="GET">
-                    <button class="btn btn-primary" style="width: 110px;height: 55px;">UPDATE</a>
-                </form>
-                <br>
-                <br>
-                <form id="form" action="/blogs/<%= foundBlog._id%>" method="POST">
-                    <button class="btn btn-danger" style="width: 110px;height: 55px;">DELETE</a>
-                </form>
+            <div class="form-group">
+                <label for="blogSybtitle">Blog Subtitle</label>
+                <input type="text" class="form-control" id="blogSubtitle" placeholder="Blog Subtitle" value="<%= foundBlog.blogSubtitle %>""
+                    name="blogSubtitle">
             </div>
-        </div>
+            <div class="form-group">
+                <label for="img">Select image:</label>
+                <input type="file" id="img" name="img" accept="image/*">
+                <br>
+                <small>Max File Size: 100kb (102400 byte)</small>
+                <br>
+                <small>Current Image</small>
+                <br>
+                <img class="img-responsive" src="/<%= foundBlog.blogImg %>" style="width: 200px;height: 200px;">
+            </div>
+            <div class="form-group">
+                <label for="blogContent">Blog Content</label>
+                <textarea name="editor" id="myTextArea"><%- foundBlog.blogContent %></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">UPDATE</button>
+        </form>
     </div>
-    <% } else { %>
-    <%}%>
-    
-    
-    
-
 
 
     <!-- Footer -->
@@ -202,7 +193,39 @@
 
     <!-- Custom scripts for this template -->
     <script src="/js/main.js"></script>
+    <script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('editor');
+    </script>
+    <script>
+        const form = document.getElementById('form');
+        const blogTitle = document.getElementById('blogTitle');
+        const blogSubtitle = document.getElementById('blogSubtitle');
+        const blogContent = CKEDITOR.instances.myTextArea;
+        const errorElement = document.getElementById('error');
+        const imageError = document.getElementById('imageError');
+        errorElement.style = "text-align:center";
 
+        form.addEventListener('submit', (e) => {
+            let messages = [];
+            if (blogTitle.value === '' || blogTitle.value == null) {
+                messages.push('Blog Title Required');
+            }
+
+            if (blogContent.getData() === '' || blogContent.getData() == null) {
+                messages.push('Blog Content Required');
+            }
+
+
+            if (messages.length > 0) {
+                e.preventDefault();
+                errorElement.innerText = messages.join('\n');
+                errorElement.classList = "alert alert-danger";
+                if (imageError != null)
+                    imageError.remove();
+            }
+        })
+    </script>
 </body>
 
 </html>

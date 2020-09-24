@@ -1,0 +1,46 @@
+<%- include ("./partials/header") %>
+
+<%if(foundUser.blogDetail.length == 0 && localStorage.getItem("userId") == foundUser._id ){%>
+<br>
+<br>
+<div class="col-lg-6" style="margin-left: 25%;">
+  <div style="text-align: center;">
+    <div>
+      <a class="btn btn-primary" href="/create-blog">CREATE YOUR FIRST BLOG</a>
+    </div>
+  </div>
+</div>
+<br>
+<br>
+<br>
+<% } else { %>
+
+<div class="col-lg-6" style="margin-left: 25%;">
+  <div class="container">
+    <% for(let i=0, j=0; i < foundUser.blogDetail.length; i+=3, j++) { %>
+    <div class="row">
+      <div class="col-lg-5 mx-auto">
+        <img src="/<%= foundUser.blogDetail[i+2] %>" style="height: 200px; width: 200px;" alt="blog images">
+      </div>
+      <div class="col-lg-7 mx-auto">
+        <div class="post-preview">
+          <a href="/blogs/<%= foundUser.blog[j]%>">
+            <h2 class="post-title">
+              <%= foundUser.blogDetail[i] %>
+            </h2>
+            <h3 class="post-subtitle">
+              <%= foundUser.blogDetail[i+1] %>
+            </h3>
+          </a>
+        </div>
+        <hr>
+      </div>
+    </div>
+    <br>
+    <br>
+    <% }; %>
+  </div>
+  <%}%>
+</div>
+
+  <%- include ("./partials/footer") %>

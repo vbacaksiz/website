@@ -7,7 +7,8 @@ let userSchema = new Schema({
     email : {type:String, required:true},
     password : {type:String, required:true},
     createdDate : {type:Date, default:Date.now()},
-    blogs: []
+    blogs: [],
+    img: String
 });
 
 let user = mongoose.model('user', userSchema);

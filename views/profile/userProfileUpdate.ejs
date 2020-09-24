@@ -1,0 +1,161 @@
+<%- include ("./partials/header") %>
+
+<br>
+<br>
+<div class="col-lg-6" style="margin-left: 25%;">
+    <div id="error"></div>
+    <%if(typeof error == "undefined"){%>
+
+    <% } else { %>
+    <div class="alert alert-danger" id="imageError" style="text-align:center"><%= error %></div>
+    <% } %>
+    <div class="container">
+        <div class="row">
+            <form id="form" action="/users/<%= foundUser._id %>/update-profile" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="img">Backgorund Image:</label>
+                    <input type="file" id="img" name="img" accept="image/*">
+                    <br>
+                    <small>Max File Size: 100kb (102400 byte)</small>
+                    <br>
+                    <small>Current Image</small>
+                    <br>
+                    <img class="img-responsive" src="/<%= foundUser.userBackgroundImg %>"
+                        style="width: 200px;height: 200px;">
+                    <hr>
+                    <h2> Social Media </h2>
+                    <div style="margin-left: 7%;" class="col-lg-6">
+                        <div class="form-group">
+                            <label for="twitter">Twitter</label>
+                            <input type="text" class="form-control" id="twitter" placeholder="twitter" name="twitter"
+                                value="twitter.com/">
+                        </div>
+                        <div class="form-group">
+                            <label for="facebook">Facebook</label>
+                            <input type="text" class="form-control" id="facebook" placeholder="facebook" name="facebook"
+                                value="facebook.com/">
+                        </div>
+                        <div class="form-group">
+                            <label for="github">Github</label>
+                            <input type="text" class="form-control" id="github" placeholder="github" name="github"
+                                value="github.com/">
+                        </div>
+                        <div class="form-group">
+                            <label for="instagram">Instagram</label>
+                            <input type="text" class="form-control" id="instagram" placeholder="instagram"
+                                name="instagram" value="instagram.com/">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <label for="About">About</label>
+                        <textarea name="editor" id="myTextArea"><%- foundUser.about %></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">UPDATE</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <ul class="list-inline text-center">
+                    <li class="list-inline-item">
+                        <a href="#">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+                <p class="copyright text-muted">Copyright &copy; Your Website 2020</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/popper.min.js"></script>
+
+<!-- Custom scripts for this template -->
+<script src="/js/main.js"></script>
+<script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace('editor');
+</script>
+<script>
+    const form = document.getElementById('form');
+    const twitter = document.getElementById('twitter');
+    const github = document.getElementById('github');
+    const facebook = document.getElementById('facebook');
+    const instagram = document.getElementById('instagram');
+    const about = CKEDITOR.instances.myTextArea;
+    const errorElement = document.getElementById('error');
+    const imageError = document.getElementById('imageError');
+    errorElement.style = "text-align:center";
+
+    form.addEventListener('submit', (e) => {
+        let messages = [];
+        if(twitter.value != "")
+        {
+            if (twitter.value.search("twitter.com/") != false) {
+                messages.push('Please enter a valid twitter address');
+            }
+        }
+            
+
+        if(facebook.value != "")
+        {
+            if (facebook.value.search("facebook.com/") != false) {
+                messages.push('Please enter a valid facebook address');
+            }
+        }
+
+        if(github.value != "")
+        {
+            if (github.value.search("github.com/") != false) {
+                messages.push('Please enter a valid github address');
+            }
+        }
+
+        if(instagram.value != "")
+        {
+            if (instagram.value.search("instagram.com/") != false) {
+                messages.push('Please enter a valid instagram address');
+            }
+        }
+
+
+        if (messages.length > 0) {
+            e.preventDefault();
+            errorElement.innerText = messages.join('\n');
+            errorElement.classList = "alert alert-danger";
+            if (imageError != null)
+                imageError.remove();
+        }
+    })
+</script>
+</body>
+
+</html>
