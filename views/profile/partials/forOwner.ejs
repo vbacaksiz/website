@@ -5,10 +5,14 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="text-align: center;">
       <div class="navbar-nav">
-        <a class="nav-item nav-link active" href="/users/<%= foundUser._id %>">Home <span class="sr-only">(current)</span></a>
-        <a class="nav-item nav-link" href="/users/<%= foundUser._id %>/about">About</a>
-        <a class="nav-item nav-link" href="/users/<%= foundUser._id %>/update-profile">Update Profile</a>
-        <a class="nav-item nav-link" href="/users/<%= foundUser._id %>/update-profile-photo">Change Profile Photo</a>
+        <%if(typeof page == "undefined"){%>
+  
+        <% } else { %>
+        <a class="nav-item nav-link <% if(page === 'userProfile'){ %> active <% } else {%><% } %>" href="/users/<%= foundUser._id %>">Home</a>
+        <a class="nav-item nav-link <% if(page === 'about') { %>active<% } %>" href="/users/<%= foundUser._id %>/about">About</a>
+        <a class="nav-item nav-link <% if(page === 'updateProfile') { %>active<% } %>" href="/users/<%= foundUser._id %>/update-profile">Update Profile</a>
+        <a class="nav-item nav-link <% if(page === 'updateProfilePhoto') { %>active<% } %>" href="/users/<%= foundUser._id %>/update-profile-photo">Change Profile Photo</a>
+        <% } %>
       </div>
     </div>
   </nav>

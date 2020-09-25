@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Clean Blog - Start Bootstrap Theme</title>
+    <title>UBlog</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -19,6 +19,7 @@
     <!-- Custom styles for this template -->
     <script src="/js/jquery.min.js"></script>
 
+    <link rel="icon" href="/img/browserTab.png">
 
     <!-- Custom styles for this template -->
     <link href="/css/main.css" rel="stylesheet">
@@ -31,7 +32,8 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
         <div class="container">
-            <a class="navbar-brand" href="/">Start Bootstrap</a>
+            <a class="navbar-brand" href="/"><img class="img-responsive" src="/img/logo.png"
+                    style="width: 100px;height: 25px;"></a>
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
                 data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -44,18 +46,12 @@
                         <a class="nav-link" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/about">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/contact">Contact</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="/create-blog">Create Blog</a>
                     </li>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><img
-                                    src="/<%= user.img %>" alt="Alternate Text"
-                                    class="img-responsive rounded-circle" style="width: 30px;height: 30px;" />
+                                    src="/<%= user.img %>" alt="Alternate Text" class="img-responsive rounded-circle"
+                                    style="width: 30px;height: 30px;" />
                                 <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li>
@@ -82,7 +78,8 @@
                                         <div class="navbar-footer-content">
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <a href="/users/<%= user.id %>/update-profile-photo" class="btn btn-default btn-sm">Change Photo</a>
+                                                    <a href="/users/<%= user.id %>/update-profile-photo"
+                                                        class="btn btn-default btn-sm">Change Photo</a>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <a href="/logout"
@@ -120,42 +117,42 @@
         </div>
     </header>
 
+    <%if(user.id == foundBlog.createdUser){%>
+    <div class="fa-pull-left" style="margin-left: 10%;">
+        <a href="/blogs/<%= foundBlog._id%>/update">
+            <i class="fas fa-redo"> UPDATE</i>
+        </a>
+    </div>
+    <div class="fa-pull-right" style="margin-right: 10%;">
+        <form id="form" action="/blogs/<%= foundBlog._id%>" method="POST">
+            <button style="padding: 0;border: none;background: transparent;outline: none;"><i class="fas fa-trash"
+                    style="color: red;"> DELETE</i></button>
+        </form>
+    </div>
+    <br>
+    <br>
+    <% } else { %>
+    <%}%>
+
     <!-- Main Content -->
     <div class="container">
         <%if(typeof message == "undefined"){%>
 
-        <% } else { %>
-        <div class="alert alert-success" id="updateSuccessfully" style="text-align:center"><%= message %></div>
-        <% } %>
-        <div class="row">
-            <div class="col-lg-8 mx-auto">
-                <%- foundBlog.blogContent %>
-            </div>
+    <% } else { %>
+    <div class="alert alert-success" id="updateSuccessfully" style="text-align:center"><%= message %></div>
+    <% } %>
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <%- foundBlog.blogContent %>
         </div>
+    </div>
     </div>
 
     <hr>
 
-    <%if(user.id == foundBlog.createdUser){%>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-1 mx-auto">
-                <form id="form" action="/blogs/<%= foundBlog._id%>/update" method="GET">
-                    <button class="btn btn-primary" style="width: 110px;height: 55px;">UPDATE</a>
-                </form>
-                <br>
-                <br>
-                <form id="form" action="/blogs/<%= foundBlog._id%>" method="POST">
-                    <button class="btn btn-danger" style="width: 110px;height: 55px;">DELETE</a>
-                </form>
-            </div>
-        </div>
-    </div>
-    <% } else { %>
-    <%}%>
-    
-    
-    
+
+
+
 
 
 
@@ -166,23 +163,7 @@
                 <div class="col-lg-8 col-md-10 mx-auto">
                     <ul class="list-inline text-center">
                         <li class="list-inline-item">
-                            <a href="#">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fas fa-circle fa-stack-2x"></i>
-                                    <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="#">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fas fa-circle fa-stack-2x"></i>
-                                    <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="#">
+                            <a href="https://www.github.com/vbacaksiz">
                                 <span class="fa-stack fa-lg">
                                     <i class="fas fa-circle fa-stack-2x"></i>
                                     <i class="fab fa-github fa-stack-1x fa-inverse"></i>
@@ -190,7 +171,7 @@
                             </a>
                         </li>
                     </ul>
-                    <p class="copyright text-muted">Copyright &copy; Your Website 2020</p>
+                    <p class="copyright text-muted">Copyright &copy; UBlog 2020</p>
                 </div>
             </div>
         </div>

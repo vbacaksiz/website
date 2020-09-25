@@ -15,10 +15,6 @@ router.get('/blogs/:blogId/update', authGuard.isBlogOwner, blogController.blogUp
 
 router.post('/blogs/:blogId/update', authGuard.isBlogOwner, blogController.blogUpdatePost);
 
-router.get('/about', authGuard.isNotAuthenticated, blogController.siteDetail);
-
-router.get('/contact', authGuard.isNotAuthenticated, userController.contactUser);
-
 router.get('/create-blog', authGuard.isNotAuthenticated, blogController.newBlog);
 
 router.post('/create-blog', authGuard.isNotAuthenticated, blogController.newBlogPost);

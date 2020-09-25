@@ -109,7 +109,7 @@ exports.userProfile = async (req, res) => {
             });
             foundUser.data.blogDetail[i + 2] = 'blogImages/' + foundUser.data.blog[j] + '.png';
         }
-        res.render('profile/userProfile', { user: user, foundUser: foundUser.data })
+        res.render('profile/userProfile', { user: user, foundUser: foundUser.data, page: 'userProfile' })
     }).catch(err => {
         console.log(err);
         console.log('error');
@@ -124,7 +124,7 @@ exports.aboutUser = (req, res) => {
         fs.writeFile('public/userBackgroundImages/' + foundUser.data._id + '.png', foundUser.data.userBackgroundImg, { encoding: 'base64' }, function (err) {
         });
         foundUser.data.userBackgroundImg = 'userBackgroundImages/' + foundUser.data._id + '.png';
-        res.render('profile/userAbout', { user: user, foundUser: foundUser.data });
+        res.render('profile/userAbout', { user: user, foundUser: foundUser.data, page: "about" });
     }).catch(err => {
         console.log(err);
         console.log('error');
@@ -139,7 +139,7 @@ exports.updateProfile = (req, res) => {
         fs.writeFile('public/userBackgroundImages/' + foundUser.data._id + '.png', foundUser.data.userBackgroundImg, { encoding: 'base64' }, function (err) {
         });
         foundUser.data.userBackgroundImg = 'userBackgroundImages/' + foundUser.data._id + '.png';
-        res.render('profile/userProfileUpdate', { user: user, foundUser: foundUser.data });
+        res.render('profile/userProfileUpdate', { user: user, foundUser: foundUser.data, page: "updateProfile" });
     }).catch(err => {
         console.log(err);
         console.log('error');
@@ -185,19 +185,25 @@ exports.updateProfilePost = (req, res) => {
                     fs.unlinkSync(req.file.path);
                 });
             } else {
-                axios.post('http://localhost:4000/user/' + req.params.userId + '/update-profile', {
-                    "twitter": req.body.twitter,
-                    "facebook": req.body.facebook,
-                    "github": req.body.github,
-                    "instagram": req.body.instagram,
-                    "about": req.body.editor,
-                }).then(response => {
-                    console.log('Success2');
-                    res.redirect('/users/' + req.params.userId);
+                axios.get('http://localhost:4000/user/' + req.params.userId + '/update-profile').then(foundUser => {
+                    axios.post('http://localhost:4000/user/' + req.params.userId + '/update-profile', {
+                        "twitter": req.body.twitter,
+                        "facebook": req.body.facebook,
+                        "github": req.body.github,
+                        "instagram": req.body.instagram,
+                        "about": req.body.editor,
+                        "backgroundImg": foundUser.data.userBackgroundImg
+                    }).then(response => {
+                        console.log('Success2');
+                        res.redirect('/users/' + req.params.userId);
+                    }).catch(err => {
+                        if (err.response) {
+                            console.log(err.response.data.message);
+                        }
+                    });
                 }).catch(err => {
-                    if (err.response) {
-                        console.log(err.response.data.message);
-                    }
+                    console.log(err);
+                    console.log('error');
                 });
             }
         }
@@ -212,7 +218,7 @@ exports.updateProfilePhoto = (req, res) => {
         fs.writeFile('public/userBackgroundImages/' + foundUser.data._id + '.png', foundUser.data.userBackgroundImg, { encoding: 'base64' }, function (err) {
         });
         foundUser.data.userBackgroundImg = 'userBackgroundImages/' + foundUser.data._id + '.png';
-        res.render('profile/userProfilePhotoUpdate', { user: user, foundUser: foundUser.data });
+        res.render('profile/userProfilePhotoUpdate', { user: user, foundUser: foundUser.data, page: "updateProfilePhoto" });
     }).catch(err => {
         console.log(err);
         console.log('error');
@@ -254,15 +260,21 @@ exports.updateProfilePhotoPost = (req, res) => {
                     fs.unlinkSync(req.file.path);
                 });
             } else {
-                axios.post('http://localhost:4000/user/' + req.params.userId + '/update-profile-photo', {
-                }).then(response => {
-                    console.log('Success2');
-                    res.redirect('/users/' + req.params.userId);
+                axios.get('http://localhost:4000/user/' + req.params.userId + '/update-profile').then(foundUser => {
+                    axios.post('http://localhost:4000/user/' + req.params.userId + '/update-profile-photo', {
+                        "img":foundUser.data.userImg
+                    }).then(response => {
+                        console.log('Success2');
+                        res.redirect('/users/' + req.params.userId);
+                    }).catch(err => {
+                        if (err.response) {
+                            console.log(err.response.data.message);
+                        }
+                    });
                 }).catch(err => {
-                    if (err.response) {
-                        console.log(err.response.data.message);
-                    }
-                });
+                    console.log(err);
+                    console.log('error');
+                })
             }
         }
     });

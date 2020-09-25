@@ -13,7 +13,7 @@
         <div class="row">
             <form id="form" action="/users/<%= foundUser._id %>/update-profile" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="img">Backgorund Image:</label>
+                    <label for="img">Background Image:</label>
                     <input type="file" id="img" name="img" accept="image/*">
                     <br>
                     <small>Max File Size: 100kb (102400 byte)</small>
@@ -27,23 +27,23 @@
                     <div style="margin-left: 7%;" class="col-lg-6">
                         <div class="form-group">
                             <label for="twitter">Twitter</label>
-                            <input type="text" class="form-control" id="twitter" placeholder="twitter" name="twitter"
-                                value="twitter.com/">
+                            <input type="text" class="form-control" id="twitter" placeholder="twitter.com/" name="twitter"
+                                value=<%= foundUser.socialMedia[0] %>>
                         </div>
                         <div class="form-group">
                             <label for="facebook">Facebook</label>
-                            <input type="text" class="form-control" id="facebook" placeholder="facebook" name="facebook"
-                                value="facebook.com/">
+                            <input type="text" class="form-control" id="facebook" placeholder="facebook.com/" name="facebook"
+                                value=<%= foundUser.socialMedia[1] %>>
                         </div>
                         <div class="form-group">
                             <label for="github">Github</label>
-                            <input type="text" class="form-control" id="github" placeholder="github" name="github"
-                                value="github.com/">
+                            <input type="text" class="form-control" id="github" placeholder="github.com/" name="github"
+                                value=<%= foundUser.socialMedia[2] %>>
                         </div>
                         <div class="form-group">
                             <label for="instagram">Instagram</label>
-                            <input type="text" class="form-control" id="instagram" placeholder="instagram"
-                                name="instagram" value="instagram.com/">
+                            <input type="text" class="form-control" id="instagram" placeholder="instagram.com/"
+                                name="instagram" value=<%= foundUser.socialMedia[3] %>>
                         </div>
                     </div>
                     <hr>

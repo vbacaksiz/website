@@ -59,7 +59,8 @@ exports.newBlogPost = (req, res) => {
                 }).then(response => {
                     fs.unlinkSync(req.file.path);
                     console.log('Success');
-                    res.redirect('/');
+                    console.log(response.data.id);
+                    res.redirect('/blogs/' + response.data.id);
                 }).catch(err => {
                     if (err.response) {
                         console.log(err.response.data.message);
@@ -75,7 +76,7 @@ exports.newBlogPost = (req, res) => {
                     "email": user.email
                 }).then(response => {
                     console.log('Success');
-                    res.redirect('/');
+                    res.redirect('/blogs/' + response.data.id);
                 }).catch(err => {
                     if (err.response) {
                         console.log(err.response.data.message);
@@ -150,7 +151,7 @@ exports.blogUpdatePost = (req, res) => {
                     console.log('File created');
                 });
                 foundBlog.data.blogImg = 'blogImages/' + foundBlog.data._id + '.png';
-                return res.render('updateBlog', { user: user, foundBlog: foundBlog.data, error:err });
+                return res.render('updateBlog', { user: user, foundBlog: foundBlog.data, error: err });
             }).catch(err => {
                 console.log(err);
                 console.log('error');
@@ -175,19 +176,25 @@ exports.blogUpdatePost = (req, res) => {
                     fs.unlinkSync(req.file.path);
                 });
             } else {
-                axios.post('http://localhost:4000/blogs/' + req.params.blogId, {
-                    "blogTitle": req.body.blogTitle,
-                    "blogSubtitle": req.body.blogSubtitle,
-                    "blogContent": req.body.editor,
+                axios.get('http://localhost:4000/blogs/' + req.params.blogId).then(foundBlog => {
+                    axios.post('http://localhost:4000/blogs/' + req.params.blogId, {
+                        "blogTitle": req.body.blogTitle,
+                        "blogSubtitle": req.body.blogSubtitle,
+                        "blogContent": req.body.editor,
+                        "blogImg": foundBlog.data.blogImg
                 }).then(response => {
-                    console.log('Update Success');
-                    messages = "Blog Updated Successfully!";
-                    res.redirect('/blogs/' + req.params.blogId);
+                            console.log('Update Success');
+                            messages = "Blog Updated Successfully!";
+                            res.redirect('/blogs/' + req.params.blogId);
+                        }).catch(err => {
+                            if (err.response) {
+                                console.log(err.response.data.message);
+                            }
+                        });
                 }).catch(err => {
-                    if (err.response) {
-                        console.log(err.response.data.message);
-                    }
-                });
+                    console.log(err);
+                    console.log('error');
+                })
             }
         }
     })
